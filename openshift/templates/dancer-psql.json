@@ -5,7 +5,7 @@
     "name": "dancer-psql-example",
     "annotations": {
       "description": "An example Dancer application with a PostgreSQL database",
-      "tags": "instant-app,perl,dancer,psql",
+      "tags": "instant-app,perl,dancer,postgresql",
       "iconClass": "icon-perl"
     }
   },
@@ -180,26 +180,6 @@
                     "value": "${SECRET_KEY_BASE}"
                   },
                   {
-                    "name": "POSTGRESQL_MAX_CONNECTIONS",
-                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
-                  },
-                  {
-                    "name": "POSTGRESQL_SHARED_BUFFERS",
-                    "value": "${POSTGRESQL_SHARED_BUFFERS}"
-                  },
-                  {
-                    "name": "APPLICATION_DOMAIN",
-                    "value": "${APPLICATION_DOMAIN}"
-                  },
-                  {
-                    "name": "APPLICATION_USER",
-                    "value": "${APPLICATION_USER}"
-                  },
-                  {
-                    "name": "APPLICATION_PASSWORD",
-                    "value": "${APPLICATION_PASSWORD}"
-                  },
-                  {
                     "name": "PERL_APACHE2_RELOAD",
                     "value": "${PERL_APACHE2_RELOAD}"
                   }
@@ -222,7 +202,7 @@
       "spec": {
         "ports": [
           {
-            "name": "psql",
+            "name": "postgresql",
             "port": 5432,
             "targetPort": 5432
           }
@@ -251,12 +231,12 @@
             "imageChangeParams": {
               "automatic": false,
               "containerNames": [
-                "psql"
+                "postgresql"
               ],
               "from": {
                 "kind": "ImageStreamTag",
                 "namespace": "openshift",
-                "name": "psql:9.4"
+                "name": "postgresql:9.2"
               }
             }
           },
@@ -278,8 +258,8 @@
           "spec": {
             "containers": [
               {
-                "name": "psql",
-                "image": "psql",
+                "name": "postgresql",
+                "image": "postgresql",
                 "ports": [
                   {
                     "containerPort": 5432
@@ -297,14 +277,6 @@
                   {
                     "name": "POSTGRESQL_DATABASE",
                     "value": "${DATABASE_NAME}"
-                  },
-                  {
-                    "name": "POSTGRESQL_MAX_CONNECTIONS",
-                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
-                  },
-                  {
-                    "name": "POSTGRESQL_SHARED_BUFFERS",
-                    "value": "${POSTGRESQL_SHARED_BUFFERS}"
                   }
                 ]
               }
@@ -374,29 +346,9 @@
       "value": "sampledb"
     },
     {
-      "name": "POSTGRESQL_MAX_CONNECTIONS",
-      "description": "database max connections",
-      "value": "10"
-    },
-    {
-      "name": "POSTGRESQL_SHARED_BUFFERS",
-      "description": "database shared buffers",
-      "value": "12MB"
-    },
-    {
       "name": "PERL_APACHE2_RELOAD",
       "description": "Set this to \"true\" to enable automatic reloading of modified Perl modules",
       "value": ""
-    },
-    {
-      "name": "APPLICATION_USER",
-      "description": "The application user that is used within the sample application to authorize access on pages",
-      "value": "openshift"
-    },
-    {
-      "name": "APPLICATION_PASSWORD",
-      "description": "The application password that is used within the sample application to authorize access on pages",
-      "value": "secret"
     },
     {
       "name": "SECRET_KEY_BASE",
@@ -406,4 +358,3 @@
     }
   ]
 }
-
